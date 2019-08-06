@@ -1,0 +1,115 @@
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Document</title>
+        <link href="https://vjs.zencdn.net/7.1.0/video-js.css" rel="stylesheet">
+
+        <!-- If you'd like to support IE8 (for Video.js versions prior to v7) -->
+        <script src="https://vjs.zencdn.net/ie8/ie8-version/videojs-ie8.min.js"></script>
+
+        
+        
+    </head>
+    <body>
+            <video id="example_video_1" class="video-js vjs-default-skin" controls preload="none" width="1136" height="640"  poster="http://vjs.zencdn.net/v/oceans.png"> <source src="http://vjs.zencdn.net/v/oceans.mp4" type="video/mp4"> 
+            </video>
+
+            <!-- <video autoplay name="media">
+                <source src="http://vjs.zencdn.net/v/oceans.mp4" type="video/mp4"> 
+            </video> -->
+           
+            <script src="https://vjs.zencdn.net/7.1.0/video.js"></script>
+            
+            
+    </body>
+    <script>
+ 
+        var player = videojs('example_video_1',{ muted: true, controls : false, height:640, width:1136, loop : false ,autoplay:true },
+        function onPlayerReady() 
+        { 
+        //     console.log("ready to play",this);
+        //     Ajax({
+        //     method:'POST',
+        //     url:"/play",
+        //     data : "play",
+        //   },this);
+            
+            
+            // this.muted(false);
+            // getplayer(this);
+            this.state=0;
+            // this.muted(false)
+
+            this.on('play',function()
+            {
+                
+                console.log("playing .. ");
+                // console.log(this.state)
+                 this.muted(false)
+                // if(this.currentTime()>1)
+                // {
+                //     console.log("open ")
+                    
+                // }
+            })
+       
+            // this.enterFullScreen()
+            // this.play();
+            
+            this.on('click',function()
+            {
+                console.log(this.state)
+                this.muted(false)
+                if(this.state==0)
+                {
+                    this.pause();
+                    this.state=1;
+                }
+                else if(this.state==1)
+                {
+                    this.play();
+                    this.state=0;
+                }
+                console.log("click ",this.state)
+            })
+        });
+        console.log(player);
+        function Ajax(json,videoplayer){
+            var url=json.url;
+            var method=json.method;
+            var success=json.success;
+            var obj=json.data;
+            var request=null;
+            if(window.XMLHttpRequest){
+                request=new XMLHttpRequest();// IE7+, Firefox, Chrome, Opera, Safari 浏览器执行代码
+                // alert("ok");
+            }else{
+                try{
+                    request=new ActiveObject('Microsoft.XMLHTTP');// IE6, IE5 浏览器执行代码
+                    }
+                catch(faild){
+                    alert('Error:Ajax request faild');
+                }
+            }
+            if(request!=null){      
+                request.onreadystatechange=function(){
+                    if(request.readyState==4&&request.status==200){
+                        
+                        console.log("can play video",videoplayer);
+                        // videoplayer.muted(false);
+                        videoplayer.play();
+                       
+                    }else{  
+                    }           
+                }
+                request.open(method,url,true);
+                request.send(JSON.stringify(obj));  
+            }
+        }
+
+    </script>
+    <!-- <script type="text/javascript" src="videoplay.js"></script> -->
+
+</html>
